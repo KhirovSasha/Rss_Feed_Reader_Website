@@ -1,7 +1,7 @@
 <?php
 libxml_use_internal_errors(TRUE);
 
-static $rss = [];
+$rss = [];
 $err = "";
 $urlArray = [];
 
@@ -14,7 +14,13 @@ if (isset($_POST["submit"])) {
     $urlArray = preg_split($delimiter, $urls);
     $urlArray = array_map('trim', $urlArray);
     $urlArray = array_filter($urlArray);
-    
+
+    foreach ($urlArray as $url) {
+        $xml = simplexml_load_file($url);
+
+
+        array_push($rss, $xml);
+    }
 }
 
 function addPosts()
@@ -48,12 +54,21 @@ function addPosts()
         <input type="submit" name="submit" value="Отправить">
     </form>
 
-    <?php
-    echo count($urlArray);
-    if (count($urlArray) > 0) {
-        print_r($urlArray);
-    }
-    ?>
+    <?php if (in_array(false, $rss, true) && (count($rss) > 0)) : ?>
+        <p><?php echo "rss not available" ?></p>
+    <?php elseif (!in_array(false, $rss, true)) : ?>
+
+        <div class="">
+            <?php foreach ($rss as $item) : ?>
+                <h4><?= $item->channel->title ?></h4>
+                <?php foreach ($item->channel->item as $data) : ?>
+                    <div>
+                        <p><a href="<?= $data->link ?>"><?= $data->title ?></a></p>
+                    </div>
+                <?php endforeach ?>
+            <?php endforeach ?>
+        </div>
+    <?php endif; ?>
 </body>
 
 </html>
