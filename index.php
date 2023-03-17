@@ -14,6 +14,14 @@ if (isset($_POST["submit"])) {
     }
 }
 
+function addPosts($array){
+    echo "<h2>".$array->channel->title."</h2>";
+    foreach($array->channel->item as $item){
+        echo "<div><p><a href='".$item->link."'>".$item->title."</a></p>";
+        echo "<p>".$item->description."</p>";
+        echo "<img src='".$item->image->url."' alt='".$item->image->title."'></div>";
+    }
+}
 ?>
 
 
@@ -34,11 +42,14 @@ if (isset($_POST["submit"])) {
         <input type="submit" name="submit" value="Add">
     </form>
 
-    <?php if (strlen($err) != 0 && count($rss) < 1) : ?>
-        <p><?php echo $err ?></p>
-    <?php else : ?>
-        
-    <?php endif; ?>
+    <?php
+        if(strlen($err) != 0) {
+            echo '<h2>'. $err . '</h2>';	
+        }
+        elseif (count($rss)!=0){
+            addPosts($rss);
+        }
+    ?>
 </body>
 
 </html>
