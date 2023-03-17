@@ -22,17 +22,6 @@ if (isset($_POST["submit"])) {
         array_push($rss, $xml);
     }
 }
-
-function addPosts()
-{
-    /*echo "<h2>" . $->channel->title . "</h2>";
-    foreach($rss as $array)
-    foreach ($array->channel->item as $item) {
-        echo "<div><p><a href='" . $item->link . "'>" . $item->title . "</a></p>";
-        echo "<p>" . $item->description . "</p>";
-        echo "<img src='" . $item->image->url . "' alt='" . $item->image->title . "'></div>";
-    }*/
-}
 ?>
 
 
@@ -61,9 +50,11 @@ function addPosts()
         <div class="">
             <?php foreach ($rss as $item) : ?>
                 <h4><?= $item->channel->title ?></h4>
-                <?php foreach ($item->channel->item as $data) : ?>
+                <?php foreach ($item->channel->item as $date) : ?>
                     <div>
-                        <p><a href="<?= $data->link ?>"><?= $data->title ?></a></p>
+                        <p><a href="<?= $date->link ?>"><?= $date->title ?></a></p>
+                        <p><?= substr($date->description, 0, 150) . "..." ?></p>
+                        <img src="<?= $date->image->url ?>" alt="<?= $date->image->title ?>">
                     </div>
                 <?php endforeach ?>
             <?php endforeach ?>
