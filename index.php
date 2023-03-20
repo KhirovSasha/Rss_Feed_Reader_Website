@@ -40,7 +40,7 @@ if (isset($_POST["submit"])) {
 <body class="text-muted">
     <p class="float-right p-2">
         <a class="btn btn-warning" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
-            Hellp
+            Help
         </a>
     </p>
     <div class="row p-2">
